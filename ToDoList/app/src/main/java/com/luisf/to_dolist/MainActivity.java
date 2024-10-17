@@ -1,7 +1,12 @@
 package com.luisf.to_dolist;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 
@@ -26,11 +31,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.button_nav_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.about) {
+            Intent intent = new Intent(this, About.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
         try {
-            // Attempt to load a previously saved list
+
             mToDoList.readFromFile();
             displayList();
         }
